@@ -8,5 +8,7 @@ gini_py.egg-info/SOURCES.txt
 gini_py.egg-info/dependency_links.txt
 gini_py.egg-info/requires.txt
 gini_py.egg-info/top_level.txt
+gini_py/crypto/__init__.py
+gini_py/crypto/encryption.py
 test/__init__.py
 test/test_client.py

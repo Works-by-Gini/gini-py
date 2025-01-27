@@ -1,6 +1,5 @@
-import requests
 import json
-from typing import Dict, Any, List, Optional
+from typing import List, Optional
 from .crypto.encryption import Encryptor
 from .models import Attachment, GiniResponse
 import socket

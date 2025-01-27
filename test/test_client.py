@@ -1,6 +1,5 @@
 import unittest
 from gini_py import GiniClient, Attachment
-import os
 from pathlib import Path
 
 class TestGiniClient(unittest.TestCase):

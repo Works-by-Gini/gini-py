@@ -1,7 +1,6 @@
 from enum import Enum
 import json
 from pydantic import BaseModel, Field
-import base64
 from pathlib import Path
 from uuid import uuid4
 from typing import Any, Dict, Optional, Union

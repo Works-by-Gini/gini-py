@@ -2,12 +2,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='gini-py',
-    version='0.1.6',
+    version='0.1.7',
     author='Roba Olana',
     author_email='support@gini.works',
-    description='Python SDK to interact with Gini',
-    # long_description=open('README.md').read(),
-    # long_description_content_type='text/markdown',
+    description='Python SDK to interact with Gini (https://gini.works)',
+    long_description='Python SDK to interact with [Gini](https://www.gini.works)',
+    long_description_content_type='text/markdown',
     url='https://github.com/Works-By-Gini/gini-py', 
     packages=find_packages(),
     classifiers=[
