@@ -3,7 +3,7 @@ from typing import List, Optional
 from .crypto.encryption import Encryptor
 from .models import Attachment, GiniResponse
 import socket
-
+import ast
 class GiniClient:
     def __init__(self, api_key: str, port: int, host: str = "localhost"):
         """Initialize the Gini SDK client.
@@ -59,15 +59,16 @@ class GiniClient:
             if "error" in raw_response:
                 raise Exception(raw_response["error"])
             
-            try:
-                # Parse the JSON-encoded response string
-                response_content = json.loads(raw_response["response"])
-            except json.JSONDecodeError:
-                response_content = raw_response["response"]
+            # First parse with json.loads, then use ast.literal_eval for the Python dict string
+            response_content = json.loads(raw_response.get("response"))  # First parse
+            try: 
+                response_content = ast.literal_eval(response_content)  # Second parse using ast.literal_eval for dict responses
+            except Exception:
+                pass
             
             return GiniResponse(
                 response=response_content
             )
-            
+        
         finally:
             sock.close()
