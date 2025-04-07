@@ -1,6 +1,6 @@
-Metadata-Version: 2.2
+Metadata-Version: 2.4
 Name: gini-py
-Version: 0.1.6
+Version: 0.1.9
 Summary: Python SDK to interact with Gini (https://gini.works)
 Home-page: https://github.com/Works-By-Gini/gini-py
 Author: Roba Olana
@@ -28,6 +28,7 @@ Dynamic: classifier
 Dynamic: description
 Dynamic: description-content-type
 Dynamic: home-page
+Dynamic: license-file
 Dynamic: provides-extra
 Dynamic: requires-dist
 Dynamic: requires-python

@@ -4,6 +4,8 @@ from .crypto.encryption import Encryptor
 from .models import Attachment, GiniResponse
 import socket
 import ast
+import base64
+
 class GiniClient:
     def __init__(self, api_key: str, port: int, host: str = "localhost"):
         """Initialize the Gini SDK client.
@@ -18,7 +20,7 @@ class GiniClient:
         self.port = port
         self.encryptor = Encryptor(api_key)
 
-    def execute_gini(self, input : str, attachments: List[Attachment], gini_id: Optional[str] = None) -> GiniResponse:
+    def execute_gini(self, input : str, attachments: Optional[List[Attachment]] = None, gini_id: Optional[str] = None) -> GiniResponse:
         """Execute a Gini request.
         
         Args:
@@ -33,13 +35,18 @@ class GiniClient:
             ConnectionError: If unable to connect to the server
             Exception: If the server returns an error
         """
+        data = {
+            "giniID": gini_id,
+            "value": input,
+            "attachments": [att.model_dump() for att in attachments] if attachments else []
+        }
+        
+        # Base64 encode just the data portion
+        encoded_data = base64.b64encode(json.dumps(data).encode()).decode()
+        
         request_data = {
             "action": "EXECUTE_GINI",
-            "data": {
-                "giniID": gini_id,
-                "value": input,
-                "attachments": [att.model_dump() for att in attachments]
-            }
+            "data": encoded_data
         }
         
         # Encrypt the request
@@ -59,10 +66,10 @@ class GiniClient:
             if "error" in raw_response:
                 raise Exception(raw_response["error"])
             
-            # First parse with json.loads, then use ast.literal_eval for the Python dict string
-            response_content = json.loads(raw_response.get("response"))  # First parse
+            # Decode the base64 response value
+            response_content = base64.b64decode(raw_response.get("response")).decode()
             try: 
-                response_content = ast.literal_eval(response_content)  # Second parse using ast.literal_eval for dict responses
+                response_content = json.loads(response_content)  # Try to parse as JSON
             except Exception:
                 pass
             
